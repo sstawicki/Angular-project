@@ -1,23 +1,32 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Component } from '@angular/core';
+import {DataStorageService} from '../shared/data-storage.service';
+import {Response} from '@angular/http';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  templateUrl: './header.component.html'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
-  /*@Output()
-  featureSelected = new EventEmitter<string>();
+  constructor(private dataStorageService: DataStorageService, private  authService: AuthService) {
 
-  onSelect(feature: string) {
-  this.featureSelected.emit(feature);
-  } */
-
-
-  constructor() { }
-
-  ngOnInit() {
   }
 
+  onSaveData() {
+    this.dataStorageService.storeRecipes()
+      .subscribe(
+        (response: Response) => {
+
+        }
+      );
+  }
+
+  onFetchData() {
+    this.dataStorageService.getRecipes();
+  }
+
+  onLogout() {
+    this.authService.logout();
+  }
 }
